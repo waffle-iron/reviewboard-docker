@@ -34,4 +34,3 @@ RUN apt remove -y `cat gcc-deps.txt | tr "\n" " "` && rm gcc-deps.txt
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["mysql"]
