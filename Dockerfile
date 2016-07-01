@@ -33,4 +33,6 @@ RUN apt remove -y `cat gcc-deps.txt | tr "\n" " "` && rm gcc-deps.txt
 
 COPY entrypoint.sh /entrypoint.sh
 
+EXPOSE 80
+
 ENTRYPOINT ["/entrypoint.sh"]
