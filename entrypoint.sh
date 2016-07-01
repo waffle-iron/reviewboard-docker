@@ -4,6 +4,8 @@ set -e
 
 # TODO Support for postgress and sqlite
 
+: ${DATABASE:=mysql}
+
 if [[ "$DATABASE" == "mysql" ]]; then
     # if we're linked to MySQL and thus have credentials already, let's use them
     : ${REVIEWBOARD_DB_USER:=${MYSQL_ENV_MYSQL_USER:-root}}
@@ -12,6 +14,17 @@ if [[ "$DATABASE" == "mysql" ]]; then
     fi
     : ${REVIEWBOARD_DB_PASSWORD:=$MYSQL_ENV_MYSQL_PASSWORD}
     : ${REVIEWBOARD_DB_NAME:=${MYSQL_ENV_MYSQL_DATABASE:-reviewboard}}
+
+elif [[ "$DATABASE" == "postgresql" ]]; then
+
+    echo >&2 'ERROR: PostgreSQL support not implemented yet in Docker image.'
+    exit 2
+
+elif [[ "$DATABASE" == "sqlite3" ]]; then
+
+    echo >&2 'ERROR: SQLite3 support not implemented yet in Docker image.'
+    exit 2
+
 fi
 
 if [ -z "$REVIEWBOARD_DB_PASSWORD" ]; then
