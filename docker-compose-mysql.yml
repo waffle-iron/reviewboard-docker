@@ -10,3 +10,5 @@ db:
     environment:
         - MYSQL_ROOT_PASSWORD="supersecretpassword"
         - MYSQL_DATABASE="reviewboard"
+    volumes:
+        - mysql-utf8.cnf://etc/mysql/conf.d/mysql-utf8.cnf
