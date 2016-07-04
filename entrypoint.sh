@@ -4,15 +4,18 @@ set -e
 
 # TODO Support for postgress and sqlite
 
+# Default to MySQL
 : ${DATABASE:=mysql}
 
 if [[ "$DATABASE" == "mysql" ]]; then
     # if we're linked to MySQL and thus have credentials already, let's use them
+    # Default to root
     : ${REVIEWBOARD_DB_USER:=${MYSQL_ENV_MYSQL_USER:-root}}
     if [ "$REVIEWBOARD_DB_USER" = 'root' ]; then
         : ${REVIEWBOARD_DB_PASSWORD:=$MYSQL_ENV_MYSQL_ROOT_PASSWORD}
     fi
     : ${REVIEWBOARD_DB_PASSWORD:=$MYSQL_ENV_MYSQL_PASSWORD}
+    # Default to "reviewboard"
     : ${REVIEWBOARD_DB_NAME:=${MYSQL_ENV_MYSQL_DATABASE:-reviewboard}}
 
 elif [[ "$DATABASE" == "postgresql" ]]; then
