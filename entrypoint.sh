@@ -8,26 +8,24 @@ set -e
 : ${DATABASE:=mysql}
 
 if [[ "$DATABASE" == "mysql" ]]; then
+    echo 'MySQL was shosen as database backend.'
     # if we're linked to MySQL and thus have credentials already, let's use them
     # Default to root
-    : ${REVIEWBOARD_DB_USER:=${MYSQL_ENV_MYSQL_USER:-root}}
+    : ${REVIEWBOARD_DB_USER:=${DBSERVER_ENV_MYSQL_USER:-root}}
     if [ "$REVIEWBOARD_DB_USER" = 'root' ]; then
-        : ${REVIEWBOARD_DB_PASSWORD:=$MYSQL_ENV_MYSQL_ROOT_PASSWORD}
+        : ${REVIEWBOARD_DB_PASSWORD:=$DBSERVER_ENV_MYSQL_ROOT_PASSWORD}
     fi
-    : ${REVIEWBOARD_DB_PASSWORD:=$MYSQL_ENV_MYSQL_PASSWORD}
+    : ${REVIEWBOARD_DB_PASSWORD:=$DBSERVER_ENV_MYSQL_PASSWORD}
     # Default to "reviewboard"
-    : ${REVIEWBOARD_DB_NAME:=${MYSQL_ENV_MYSQL_DATABASE:-reviewboard}}
-
+    : ${REVIEWBOARD_DB_NAME:=${DBSERVER_ENV_MYSQL_DATABASE:-reviewboard}}
 elif [[ "$DATABASE" == "postgresql" ]]; then
-
+    echo 'PostgreSQL was shosen as database backend.'
     echo >&2 'ERROR: PostgreSQL support not implemented yet in Docker image.'
     exit 2
-
 elif [[ "$DATABASE" == "sqlite3" ]]; then
-
+    echo 'SQLite3 was shosen as database backend.'
     echo >&2 'ERROR: SQLite3 support not implemented yet in Docker image.'
     exit 2
-
 fi
 
 if [ -z "$REVIEWBOARD_DB_PASSWORD" ]; then
@@ -41,10 +39,8 @@ fi
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
 : "${DOMAIN:=localhost}"
 
-mkdir -p /var/www/
-
 if [[ ! -d /var/www/reviewboard ]]; then
-# TODO Setup the Python loader with wsgi
+    echo "Configuring ReviewBoard site..."
 # TODO Add memcache
     rb-site install --noinput \
         --domain-name="$DOMAIN" \
@@ -57,4 +53,6 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --web-server-type=apache --python-loader=wsgi\
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
+    echo "============================================================"
+    echo "Configuration done!"
 fi

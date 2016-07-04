@@ -36,4 +36,6 @@ COPY entrypoint.sh /entrypoint.sh
 
 EXPOSE 80
 
+VOLUME /var/www
+
 ENTRYPOINT ["/entrypoint.sh"]
