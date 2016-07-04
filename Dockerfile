@@ -13,7 +13,7 @@ RUN apt update && apt install -y \
     python-dev \
     python-mysqldb \
     python-svn
-RUN apt install -y \
+RUN apt update && apt install -y \
     libjpeg-dev \
     zlib1g-dev \
     libffi-dev \
@@ -28,6 +28,7 @@ RUN apt-get install gcc -s | grep "Inst " | cut -f 2 -d " " > gcc-deps.txt
 RUN apt install -y gcc
 
 RUN pip install ReviewBoard
+RUN pip install mod_wsgi
 
 RUN apt remove -y `cat gcc-deps.txt | tr "\n" " "` && rm gcc-deps.txt
 

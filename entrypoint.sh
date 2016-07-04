@@ -54,7 +54,7 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --db-host="$REVIEWBOARD_DB_HOSTNAME" \
         --db-user="$REVIEWBOARD_DB_USER" \
         --db-pass="$REVIEWBOARD_DB_PASSWORD" \
-        --web-server-type=apache --python-loader=modpython\
+        --web-server-type=apache --python-loader=wsgi\
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
 fi
