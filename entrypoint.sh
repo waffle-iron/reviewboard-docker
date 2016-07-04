@@ -53,6 +53,8 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --web-server-type=apache --python-loader=wsgi\
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
+    chown -R www-data:www-data /var/www/reviewboard/htdocs/media/uploaded
+    chown -R www-data:www-data /var/www/reviewboard/data
     echo "============================================================"
     echo "Configuration done!"
 fi
