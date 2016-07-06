@@ -2,6 +2,7 @@ FROM httpd:2.4.20
 MAINTAINER Ovidiu-Florin Bogdan (ovidiu.b13@gmail.com)
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV REVIEWBOARD_VERSION 2.5.6.1
 ENV MOD_WSGI_VERSION 4.5.3
 
 RUN apt update && apt install -y \
@@ -28,7 +29,7 @@ RUN pip install mysql-python
 RUN apt-get install gcc make wget -s | grep "Inst " | cut -f 2 -d " " > gcc-deps.txt
 RUN apt install -y gcc make wget
 
-RUN pip install ReviewBoard
+RUN pip install ReviewBoard==$REVIEWBOARD_VERSION
 
 RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/$MOD_WSGI_VERSION.tar.gz \
         -O mod_wsgi-$MOD_WSGI_VERSION.tar.gz \
