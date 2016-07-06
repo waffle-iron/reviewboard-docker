@@ -2,6 +2,7 @@ FROM httpd:2.4.20
 MAINTAINER Ovidiu-Florin Bogdan (ovidiu.b13@gmail.com)
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV MOD_WSGI_VERSION 4.5.3
 
 RUN apt update && apt install -y \
     patch \
@@ -24,11 +25,21 @@ RUN easy_install pip
 RUN pip install python-memcached
 RUN pip install mysql-python
 
-RUN apt-get install gcc -s | grep "Inst " | cut -f 2 -d " " > gcc-deps.txt
-RUN apt install -y gcc
+RUN apt-get install gcc make wget -s | grep "Inst " | cut -f 2 -d " " > gcc-deps.txt
+RUN apt install -y gcc make wget
 
 RUN pip install ReviewBoard
-RUN pip install mod_wsgi
+
+RUN wget https://github.com/GrahamDumpleton/mod_wsgi/archive/$MOD_WSGI_VERSION.tar.gz \
+        -O mod_wsgi-$MOD_WSGI_VERSION.tar.gz \
+    && tar xzvf mod_wsgi-$MOD_WSGI_VERSION.tar.gz \
+    && rm mod_wsgi-$MOD_WSGI_VERSION.tar.gz \
+    && cd mod_wsgi-$MOD_WSGI_VERSION \
+    && ./configure \
+    && make \
+    && make install \
+    && cd ../ \
+    && rm -rf mod_wsgi-$MOD_WSGI_VERSION
 
 RUN apt remove -y `cat gcc-deps.txt | tr "\n" " "` && rm gcc-deps.txt
 
