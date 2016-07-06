@@ -33,6 +33,7 @@ RUN pip install mod_wsgi
 RUN apt remove -y `cat gcc-deps.txt | tr "\n" " "` && rm gcc-deps.txt
 
 COPY entrypoint.sh /entrypoint.sh
+COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 
 EXPOSE 80
 
