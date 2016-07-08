@@ -10,7 +10,7 @@ install:
 before_script:
   - sed -i "s/exec httpd -DFOREGROUND/exec httpd/g" ~/reviewboard-docker/entrypoint.sh
   - echo "======================================================="
-  - cat ~/reviewboard-dockerentrypoint.sh
+  - cat ~/reviewboard-docker/entrypoint.sh
 
 script:
   - docker build -t rbtest .
