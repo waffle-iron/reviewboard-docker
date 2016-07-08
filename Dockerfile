@@ -51,4 +51,6 @@ EXPOSE 80
 
 VOLUME /var/www
 
+RUN cat /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
