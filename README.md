@@ -13,24 +13,27 @@ ReviewBoard requires a database in order to run. You can either use a container 
 ## Database in a container
 
 * MySQL example:
+
     docker run -d --name=rb_db -e MYSQL_ROOT_PASSWORD='supersecretpassword' -e MYSQL_DATABASE='reviewboard' -v mysql-utf8.cnf:/etc/mysql/conf.d/mysql-utf8.cnf:ro -v /var/lib/mysql mysql:5.7.13
 
 This uses the `mysql-utf8.cnf` file to ensure that the DB runs in UTF-8.
 
 * PostgreSQL example:
+
     [TBD]
 
 * SQLite3 example:
+
     [TBD]
 
 ## Database on another server
 
 When starting the ReviewBoard container, provide the following variables with their respective values:
 
-    * REVIEWBOARD_DB_HOSTNAME
-    * REVIEWBOARD_DB_USER
-    * REVIEWBOARD_DB_PASSWORD
-    * REVIEWBOARD_DB_NAME
+* REVIEWBOARD_DB_HOSTNAME
+* REVIEWBOARD_DB_USER
+* REVIEWBOARD_DB_PASSWORD
+* REVIEWBOARD_DB_NAME
 
 ## Starting a container
 
@@ -53,7 +56,7 @@ Don't forget to change the database password.
 
 # TODO
 
-    - [ ] Support for Memcache
-    - [ ] Volumes for media and other data
-    - [ ] Support for PostgreSQL
-    - [ ] Support for SQLite3
+- [ ] Support for Memcache
+- [ ] Volumes for media and other data
+- [ ] Support for PostgreSQL
+- [ ] Support for SQLite3
