@@ -1,0 +1,16 @@
+language: bash
+sudo: required
+services: docker
+
+install:
+  - git clone https://github.com/ovidiub13/reviewboard-docker ~/reviewboard-docker
+  - docker pul mysql:5.7.13
+  - docker run -d --name=rb_db -e MYSQL_ROOT_PASSWORD='supersecretpassword' -e MYSQL_DATABASE='reviewboard' -v mysql-utf8.cnf:/etc/mysql/conf.d/mysql-utf8.cnf:ro -v /var/lib/mysql mysql:5.7.13
+
+script:
+  - docker build -t rbtest .
+
+after_script:
+  - docker images
+  - docker run -d --link rb_db:dbserver -p 80:80 -e DATABASE=mysql rbtest
+  - docker ps
