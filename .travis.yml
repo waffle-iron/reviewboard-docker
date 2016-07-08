@@ -8,7 +8,9 @@ install:
   - docker run -d --name=rb_db -e MYSQL_ROOT_PASSWORD='supersecretpassword' -e MYSQL_DATABASE='reviewboard' -v mysql-utf8.cnf:/etc/mysql/conf.d/mysql-utf8.cnf:ro -v /var/lib/mysql mysql:5.7.13
 
 pre-script:
-  - sed -i "s/exec httpd -DFOREGROUND/# exec httpd -DFOREGROUND/g" entrypoint.sh
+  - sed -i "s/exec httpd -DFOREGROUND/exec httpd/g" ~/reviewboard-dockerentrypoint.sh
+  - echo "======================================================="
+  - cat ~/reviewboard-dockerentrypoint.sh
 
 script:
   - docker build -t rbtest .
