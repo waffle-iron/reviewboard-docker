@@ -10,5 +10,6 @@ install:
 script:
   - docker build -t rbtest .
   - docker images
-  - docker run -d --link rb_db:dbserver -p 80:80 -e DATABASE=mysql rbtest
+  - docker run -d ---name=reviewboard -link rb_db:dbserver -p 80:80 -e DATABASE=mysql rbtest
   - docker ps
+  - docker logs reviewboard
