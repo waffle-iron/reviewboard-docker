@@ -2,7 +2,7 @@
 
 # ReviewBoard image for production use
 
-This ReviewBoard image uses Apache2 with mod_wsgi to server ReviewBoard. It currently supports just MySQL as a database backend. PostgreSQL and SQLite3 soon to be added.
+This ReviewBoard image uses Apache2 with mod_wsgi to serve ReviewBoard. It currently supports just MySQL as a database backend. PostgreSQL and SQLite3 soon to be added.
 
 This image was built acording to the [ReviewBoard install documentation](https://www.reviewboard.org/docs/manual/2.5/admin/installation/linux/).
 
@@ -12,28 +12,28 @@ ReviewBoard requires a database in order to run. You can either use a container 
 
 ## Database in a container
 
-* MySQL example:
+### MySQL example:
 
     docker run -d --name=rb_db -e MYSQL_ROOT_PASSWORD='supersecretpassword' -e MYSQL_DATABASE='reviewboard' -v mysql-utf8.cnf:/etc/mysql/conf.d/mysql-utf8.cnf:ro -v /var/lib/mysql mysql:5.7.13
 
 This uses the `mysql-utf8.cnf` file to ensure that the DB runs in UTF-8.
 
-* PostgreSQL example:
+### PostgreSQL example:
 
-    [TBD]
+    # [TBD]
 
-* SQLite3 example:
+### SQLite3 example:
 
-    [TBD]
+    # [TBD]
 
 ## Database on another server
 
 When starting the ReviewBoard container, provide the following variables with their respective values:
 
-* REVIEWBOARD_DB_HOSTNAME
-* REVIEWBOARD_DB_USER
-* REVIEWBOARD_DB_PASSWORD
-* REVIEWBOARD_DB_NAME
+* `REVIEWBOARD_DB_HOSTNAME`
+* `REVIEWBOARD_DB_USER`
+* `REVIEWBOARD_DB_PASSWORD`
+* `REVIEWBOARD_DB_NAME`
 
 ## Starting a container
 
@@ -47,11 +47,10 @@ If you are using a database in a container, link to that container.
 A `docker-compose` YAML file is available (currently just for MySQL) for easing the use of this image.
 The image currently does not wait for the DB to be available, so the database container and the ReviewBoard container need to be started separately.
 
-```bash
-docker-compose -f docker-compose-mysql.yml up -d db
-# wait for db setup to complete
-docker-compose -f docker-compose-mysql.yml up -d reviewboard
-```
+    docker-compose -f docker-compose-mysql.yml up -d db
+    # wait for db setup to complete
+    docker-compose -f docker-compose-mysql.yml up -d reviewboard
+
 Don't forget to change the database password.
 
 # TODO
