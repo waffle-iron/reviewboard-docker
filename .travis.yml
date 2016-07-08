@@ -8,11 +8,11 @@ install:
   - docker run -d --name=rb_db -e MYSQL_ROOT_PASSWORD='supersecretpassword' -e MYSQL_DATABASE='reviewboard' -v mysql-utf8.cnf:/etc/mysql/conf.d/mysql-utf8.cnf:ro -v /var/lib/mysql mysql:5.7.13
 
 before_script:
-  - sed -i "s/exec httpd -DFOREGROUND/exec httpd/g" ~/reviewboard-docker/entrypoint.sh
+  - sed -i "s/exec httpd -DFOREGROUND/exec httpd -t/g" ~/reviewboard-docker/entrypoint.sh
   - echo "======================================================="
   - cat ~/reviewboard-docker/entrypoint.sh
 
 script:
   - docker build -t rbtest .
   - docker images
-  - docker run --name=reviewboard -link rb_db:dbserver -p 80:80 -e DATABASE=mysql rbtest
+  - docker run --name=reviewboard --link rb_db:dbserver -p 80:80 -e DATABASE=mysql rbtest
