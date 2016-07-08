@@ -54,6 +54,7 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
     chown -R www-data:www-data /var/www/reviewboard/htdocs/media/uploaded
+    chown -R www-data:www-data /var/www/reviewboard/htdocs/media/ext
     chown -R www-data:www-data /var/www/reviewboard/htdocs/static/ext
     chown -R www-data:www-data /var/www/reviewboard/data
     echo "============================================================"
@@ -62,5 +63,4 @@ fi
 
 # Apache gets grumpy about PID files pre-existing
 rm -f /usr/local/apache2/logs/httpd.pid
-
 exec httpd -DFOREGROUND
