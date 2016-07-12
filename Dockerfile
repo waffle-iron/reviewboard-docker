@@ -8,6 +8,7 @@ ENV MOD_WSGI_VERSION 4.5.3
 RUN apt update && apt install -y \
     patch \
     subversion \
+    memcached \
     ca-certificates
 RUN apt update && apt install -y \
     python-setuptools \
