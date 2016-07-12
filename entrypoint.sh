@@ -37,7 +37,7 @@ if [ -z "$REVIEWBOARD_DB_PASSWORD" ]; then
 fi
 
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
-: "${DOMAIN:=localhost}"
+: "${DOMAIN:=""}"
 
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
@@ -60,6 +60,8 @@ if [[ ! -d /var/www/reviewboard ]]; then
     echo "============================================================"
     echo "Configuration done!"
 fi
+
+cat /var/www/reviewboard/conf/settings_local.py
 
 # Apache gets grumpy about PID files pre-existing
 rm -f /usr/local/apache2/logs/httpd.pid
