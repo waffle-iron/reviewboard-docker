@@ -39,6 +39,11 @@ fi
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
 : "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to *, thus avoiding "Bad request 400" when accessed form non "localhost"
 
+: "${CACHETYPE:=memcache}"
+: ${MEMCACHE_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}}
+: ${MEMCAHCE_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
+: "${MEMCACHE_INFO:=$MEMCACHE_ADDR:$MEMCACHE_PORT}"
+
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
 # TODO Add memcache
