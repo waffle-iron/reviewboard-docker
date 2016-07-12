@@ -61,8 +61,6 @@ if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuration done!"
 fi
 
-cat /var/www/reviewboard/conf/settings_local.py
-
 # Apache gets grumpy about PID files pre-existing
 rm -f /usr/local/apache2/logs/httpd.pid
 exec httpd -DFOREGROUND
