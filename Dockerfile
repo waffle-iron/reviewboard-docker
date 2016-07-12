@@ -49,9 +49,6 @@ COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 
 EXPOSE 80
 
-VOLUME /var/www/reviewboard/htdocs/media/uploaded
-VOLUME /var/www/reviewboard/htdocs/media/ext
-VOLUME /var/www/reviewboard/htdocs/static/ext
-VOLUME /var/www/reviewboard/data
+VOLUME /var/www/
 
 ENTRYPOINT ["/entrypoint.sh"]
