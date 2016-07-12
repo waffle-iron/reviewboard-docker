@@ -37,7 +37,7 @@ if [ -z "$REVIEWBOARD_DB_PASSWORD" ]; then
 fi
 
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
-: "${DOMAIN:=""}"
+: "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to *, thus avoiding "Bad request 400" when accessed form non "localhost"
 
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
