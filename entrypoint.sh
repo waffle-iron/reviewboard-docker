@@ -43,9 +43,9 @@ fi
 : ${CACHE_INFO:=""}
 
 if [ "$CACHETYPE" = "memcached" ]; then
-    : ${MEMCACHED_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
-    : ${MEMCAHCED_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
-    : ${CACHE_INFO:="$MEMCACHE_ADDR:$MEMCACHE_PORT"}
+    : ${MEMCACHE_SERVER__ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
+    : ${MEMCAHCE__SERVER_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
+    : ${CACHE_INFO:="$MEMCACHE__SERVER_ADDR:$MEMCACHE__SERVER_PORT"}
 fi
 
 env | grep -i cache
