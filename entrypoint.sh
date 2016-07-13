@@ -39,16 +39,18 @@ fi
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
 : "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to '*', thus avoiding "Bad request 400" when accessed form non "localhost"
 
-: ${CACHETYPE:=memcached} # Default to memcache
+: ${CACHE_TYPE:=memcached} # Default to memcache
 : ${CACHE_INFO:=""}
 
-if [ "$CACHETYPE" = "memcached" ]; then
-    : ${MEMCACHE_SERVER__ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
-    : ${MEMCAHCE__SERVER_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
-    : ${CACHE_INFO:="$MEMCACHE__SERVER_ADDR:$MEMCACHE__SERVER_PORT"}
+if [ "$CACHE_TYPE" = "memcached" ]; then
+    : ${MEMCACHE_SERVER_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
+    : ${MEMCACHE_SERVER_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
+    : ${CACHE_INFO:="$MEMCACHE_SERVER_ADDR:$MEMCACHE_SERVER_PORT"}
 fi
 
 env | grep -i cache
+echo "CACHE_TYPE = $CACHE_TYPE"
+echo "CACHE_INFO = $CACHE_INFO"
 
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
@@ -61,7 +63,7 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --db-user="$REVIEWBOARD_DB_USER" \
         --db-pass="$REVIEWBOARD_DB_PASSWORD" \
         --web-server-type=apache --python-loader=wsgi\
-        --cache-type="$CACHETYPE" --cache-info="$CACHE_INFO" \
+        --cache-type="$CACHE_TYPE" --cache-info="$CACHE_INFO" \
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
     chown -R www-data:www-data /var/www/reviewboard/htdocs/media/uploaded

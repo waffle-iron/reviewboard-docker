@@ -41,7 +41,7 @@ When starting the ReviewBoard container, provide the following variables with th
 
 ## Caching
 
-Set the caching to be used by setting `CACHETYPE` to either `memcache` or `file`.
+Set the caching to be used by setting `CACHE_TYPE` to either `memcache` or `file`.
 
 By default this image is set to use an internal memcache server.
 
