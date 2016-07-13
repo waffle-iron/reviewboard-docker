@@ -48,10 +48,6 @@ if [ "$CACHE_TYPE" = "memcached" ]; then
     : ${CACHE_INFO:="$MEMCACHE_SERVER_ADDR:$MEMCACHE_SERVER_PORT"}
 fi
 
-env | grep -i cache
-echo "CACHE_TYPE = $CACHE_TYPE"
-echo "CACHE_INFO = $CACHE_INFO"
-
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
     rb-site install --noinput \
