@@ -41,17 +41,19 @@ When starting the ReviewBoard container, provide the following variables with th
 
 ## Caching
 
-Set the caching to be used by setting `CACHETYPE` to either `memcache` or `file`.
+Set the caching to be used by setting `CACHE_TYPE` to either `memcache` or `file`.
 
 By default this image is set to use an internal memcache server.
 
 This can be overriden by:
 * an external server
-** Set `MEMCACHE_ADDR` to the IP of the server
-** Set `MEMCAHCE_PORT` to the server port (default 11211)
+** Set `MEMCACHED_ADDR` to the IP of the server
+** Set `MEMCAHCED_PORT` to the server port (default 11211)
 * linked memcached container aliased as `memcache`
 
-Example:
+If using a file for caching, set the `CACHE_INFO` variable to the file cache directory.
+
+Example of how to start a memcache container:
 
     docker run -d --name=memcache memcached:1.4.28
 

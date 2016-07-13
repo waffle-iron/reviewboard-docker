@@ -8,7 +8,7 @@ set -e
 : ${DATABASE:=mysql}
 
 if [[ "$DATABASE" == "mysql" ]]; then
-    echo 'MySQL was shosen as database backend.'
+    echo 'MySQL was chosen as database backend.'
     # if we're linked to MySQL and thus have credentials already, let's use them
     # Default to root
     : ${REVIEWBOARD_DB_USER:=${DBSERVER_ENV_MYSQL_USER:-root}}
@@ -19,11 +19,11 @@ if [[ "$DATABASE" == "mysql" ]]; then
     # Default to "reviewboard"
     : ${REVIEWBOARD_DB_NAME:=${DBSERVER_ENV_MYSQL_DATABASE:-reviewboard}}
 elif [[ "$DATABASE" == "postgresql" ]]; then
-    echo 'PostgreSQL was shosen as database backend.'
+    echo 'PostgreSQL was chosen as database backend.'
     echo >&2 'ERROR: PostgreSQL support not implemented yet in Docker image.'
     exit 2
 elif [[ "$DATABASE" == "sqlite3" ]]; then
-    echo 'SQLite3 was shosen as database backend.'
+    echo 'SQLite3 was chosen as database backend.'
     echo >&2 'ERROR: SQLite3 support not implemented yet in Docker image.'
     exit 2
 fi
@@ -37,16 +37,19 @@ if [ -z "$REVIEWBOARD_DB_PASSWORD" ]; then
 fi
 
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
-: "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to *, thus avoiding "Bad request 400" when accessed form non "localhost"
+: "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to '*', thus avoiding "Bad request 400" when accessed form non "localhost"
 
-: "${CACHETYPE:=memcache}"
-: ${MEMCACHE_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}}
-: ${MEMCAHCE_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
-: "${MEMCACHE_INFO:=$MEMCACHE_ADDR:$MEMCACHE_PORT}"
+: ${CACHE_TYPE:=memcached} # Default to memcache
+: ${CACHE_INFO:=""}
+
+if [ "$CACHE_TYPE" = "memcached" ]; then
+    : ${MEMCACHE_SERVER_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
+    : ${MEMCACHE_SERVER_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
+    : ${CACHE_INFO:="$MEMCACHE_SERVER_ADDR:$MEMCACHE_SERVER_PORT"}
+fi
 
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
-# TODO Add memcache
     rb-site install --noinput \
         --domain-name="$DOMAIN" \
         --site-root=/ --static-url=static/ --media-url=media/ \
@@ -56,6 +59,7 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --db-user="$REVIEWBOARD_DB_USER" \
         --db-pass="$REVIEWBOARD_DB_PASSWORD" \
         --web-server-type=apache --python-loader=wsgi\
+        --cache-type="$CACHE_TYPE" --cache-info="$CACHE_INFO" \
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
     chown -R www-data:www-data /var/www/reviewboard/htdocs/media/uploaded
