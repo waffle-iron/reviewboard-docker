@@ -39,10 +39,14 @@ fi
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
 : "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to '*', thus avoiding "Bad request 400" when accessed form non "localhost"
 
-: "${CACHETYPE:=memcache}" # Default to memcache
-: ${MEMCACHE_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
-: ${MEMCAHCE_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
-: "${MEMCACHE_INFO:=--cache-info=$MEMCACHE_ADDR:$MEMCACHE_PORT}"
+: ${CACHETYPE:=memcache} # Default to memcache
+: ${CACHE_INFO:=""}
+
+if [ "$CACHETYPE" = "memcache" ]; then
+    : ${MEMCACHE_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
+    : ${MEMCAHCE_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
+    : ${CACHE_INFO:="$MEMCACHE_ADDR:$MEMCACHE_PORT"}
+fi
 
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
@@ -55,7 +59,7 @@ if [[ ! -d /var/www/reviewboard ]]; then
         --db-user="$REVIEWBOARD_DB_USER" \
         --db-pass="$REVIEWBOARD_DB_PASSWORD" \
         --web-server-type=apache --python-loader=wsgi\
-        --cache-type=$CACHETYPE $MEMCACHE_INFO \
+        --cache-type="$CACHETYPE" --cache-info="$CACHE_INFO" \
         --admin-user=admin --admin-password=admin --admin-email=admin@example.com \
         /var/www/reviewboard/
     chown -R www-data:www-data /var/www/reviewboard/htdocs/media/uploaded

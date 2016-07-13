@@ -51,7 +51,9 @@ This can be overriden by:
 ** Set `MEMCAHCE_PORT` to the server port (default 11211)
 * linked memcached container aliased as `memcache`
 
-Example:
+If using a file for caching, set the `CACHE_INFO` variable to the file cache directory.
+
+Example of how to start a memcache container:
 
     docker run -d --name=memcache memcached:1.4.28
 
