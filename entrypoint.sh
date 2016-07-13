@@ -48,7 +48,7 @@ if [ "$CACHETYPE" = "memcached" ]; then
     : ${CACHE_INFO:="$MEMCACHE_ADDR:$MEMCACHE_PORT"}
 fi
 
-env | grep -i memcache
+env | grep -i cache
 
 if [[ ! -d /var/www/reviewboard ]]; then
     echo "Configuring ReviewBoard site..."
