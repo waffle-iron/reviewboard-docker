@@ -39,12 +39,12 @@ fi
 : "${REVIEWBOARD_DB_HOSTNAME:=dbserver}"
 : "${DOMAIN:=""}" # By defaulting this empty we set ALLOWED_HOSTS to '*', thus avoiding "Bad request 400" when accessed form non "localhost"
 
-: ${CACHETYPE:=memcache} # Default to memcache
+: ${CACHETYPE:=memcached} # Default to memcache
 : ${CACHE_INFO:=""}
 
-if [ "$CACHETYPE" = "memcache" ]; then
-    : ${MEMCACHE_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
-    : ${MEMCAHCE_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
+if [ "$CACHETYPE" = "memcached" ]; then
+    : ${MEMCACHED_ADDR:=${MEMCACHE_PORT_11211_TCP_ADDR:-localhost}} # Default to internal memcache
+    : ${MEMCAHCED_PORT:=${MEMCACHE_PORT_11211_TCP_PORT:-11211}}
     : ${CACHE_INFO:="$MEMCACHE_ADDR:$MEMCACHE_PORT"}
 fi
 
