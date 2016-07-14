@@ -47,8 +47,8 @@ By default this image is set to use an internal memcache server.
 
 This can be overriden by:
 * an external server
-** Set `MEMCACHED_ADDR` to the IP of the server
-** Set `MEMCAHCED_PORT` to the server port (default 11211)
+** Set `MEMCACHE_SERVER_ADDR` to the IP of the server
+** Set `MEMCACHE_SERVER_PORT` to the server port (default 11211)
 * linked memcached container aliased as `memcache`
 
 If using a file for caching, set the `CACHE_INFO` variable to the file cache directory.
