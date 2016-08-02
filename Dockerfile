@@ -2,7 +2,7 @@ FROM httpd:2.4.20
 MAINTAINER Ovidiu-Florin Bogdan (ovidiu.b13@gmail.com)
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV REVIEWBOARD_VERSION 2.5.6.1
+ENV REVIEWBOARD_VERSION 2.0.16
 ENV MOD_WSGI_VERSION 4.5.3
 
 RUN apt update && apt install -y \
